@@ -1,0 +1,315 @@
+.titled-pane > .title {
+	-fx-font-size: 18px;
+	-fx-font-weight: BOLD;
+}
+
+.table-column {
+	-fx-alignment: CENTER;
+	-fx-font-weight: bold;
+}
+
+.table-view .column-header {
+	-fx-pref-height: 30px;
+	-fx-font-weight: bold;
+}
+
+.lefted-column {
+	-fx-alignment: LEFT;
+}
+
+
+
+.table-row-cell {
+	-fx-row-cell-size: 50px !important;
+	-fx-padding: 0;
+	-fx-font-weight: bold;
+}
+
+
+
+.table-cell {
+	-fx-cell-size: 24px !important;
+	-fx-padding: 0;
+	-fx-font-weight: bold;
+}
+
+.table-row-cell .text {
+    -fx-fill: black;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell:selected {
+	-fx-background-color: rgb(0, 128, 128) !important;
+	-fx-font-weight: bold;
+}
+
+
+
+.jfx-radio-button {
+	-fx-font-weight: bold;
+}
+
+
+
+.jfx-combo-box {
+	-fx-font-weight: bold;
+}
+
+
+
+.jfx-check-box {
+	-fx-font-weight: bold;
+}
+
+.bigestCheckBox .box {
+	-fx-pref-height: 130;
+	-fx-pref-width: 130;
+}
+
+.bigestCheckBox .mark {
+	-fx-max-width: 100;
+	-fx-max-height: 100;
+}
+
+.bigCheckBox .box {
+	-fx-pref-height: 40;
+	-fx-pref-width: 40;
+}
+
+.bigCheckBox .mark {
+	-fx-max-width: 30;
+	-fx-max-height: 25;
+}
+
+
+
+.jfx-text-field {
+	-fx-prompt-text-fill: rgba(0, 0, 0, 0.7);
+	-fx-font-weight: bold;
+}
+
+.jfx-password-field {
+	-fx-prompt-text-fill: rgba(0, 0, 0, 0.7);
+	-fx-font-weight: bold;
+}
+
+.jfx-text-area {
+	-fx-prompt-text-fill: rgba(0, 0, 0, 0.7);
+	-fx-font-weight: bold;
+}
+
+
+.button{
+	-fx-font-weight: bold;
+}
+
+
+.jfx-button {
+	-fx-font-weight: bold;
+}
+
+
+
+.label {
+	-fx-font-weight: bold;
+}
+
+
+
+.greenFond {
+	-fx-background-color: rgb(221, 241, 223);
+}
+
+.lightGreenFond {
+	-fx-background-color: rgb(230, 252, 230);
+}
+
+
+
+.wellFormattedBlackText {
+	-fx-text-fill: black;
+	-fx-font-size: 20px;
+	-fx-font-family: 'Arial Rounded MT Bold';
+	-fx-text-wrap: true !important;
+	-fx-text-alignment: center;
+}
+
+.wellFormattedMediumBlackText {
+	-fx-text-fill: black;
+	-fx-font-size: 16px;
+	-fx-font-family: 'Arial Rounded MT Bold';
+	-fx-text-wrap: true !important;
+	-fx-text-alignment: center;
+}
+
+.wellFormattedLittleMediumBlackText {
+	-fx-text-fill: black;
+	-fx-font-size: 14px;
+	-fx-font-family: 'Arial Rounded MT Bold';
+	-fx-text-wrap: true !important;
+	-fx-text-alignment: center;
+}
+
+.wellFormattedLittleBlackText {
+	-fx-text-fill: black;
+	-fx-font-size: 12px;
+	-fx-font-family: 'Arial Rounded MT Bold';
+	-fx-text-wrap: true !important;
+	-fx-text-alignment: center;
+}
+
+
+
+.lightBlueButton {
+	-fx-background-color: rgba(0, 0, 209, 0.2);
+	-fx-background-radius: 5px;
+}
+
+.lightBlueButton .jfx-rippler {
+	-jfx-rippler-fill: rgb(0, 0, 209);
+}
+
+.lightRedButton {
+	-fx-background-color: rgba(255, 0, 0, 0.2);
+	-fx-background-radius: 5px;
+}
+
+.lightRedButton .jfx-rippler {
+	-jfx-rippler-fill: rgba(255, 0, 0, 1.0);
+}
+
+.lightMagentaButton {
+	-fx-background-color: rgba(205, 50, 174, 0.2);
+	-fx-background-radius: 5px;
+}
+
+.lightMagentaButton .jfx-rippler {
+	-jfx-rippler-fill: rgb(205, 50, 174);
+}
+
+.lightYellowButton {
+	-fx-background-color: rgba(255, 255, 0, 0.4);
+	-fx-background-radius: 5px;
+}
+
+.lightYellowButton .jfx-rippler {
+	-jfx-rippler-fill: rgb(255, 255, 0);
+}
+
+.lightOrangeButton {
+	-fx-background-color: rgba(255, 128, 0, 0.2);
+	-fx-background-radius: 5px;
+}
+
+.lightOrangeButton .jfx-rippler {
+	-jfx-rippler-fill: rgb(255, 128, 0);
+}
+
+.lightCyanButton {
+	-fx-background-color: rgba(0, 242, 242, 0.2);
+	-fx-background-radius: 5px;
+}
+
+.lightCyanButton .jfx-rippler {
+	-jfx-rippler-fill: rgb(0, 242, 242);
+}
+
+.lightBrownButton {
+	-fx-background-color: rgba(209, 100, 0, 0.2);
+	-fx-background-radius: 5px;
+}
+
+.lightBrownButton .jfx-rippler {
+	-jfx-rippler-fill: rgb(209, 100, 0);
+}
+
+.lightGreenButton {
+	-fx-background-color: rgb(200, 255, 200);
+	-fx-background-radius: 5px;
+}
+
+.lightGreenButton .jfx-rippler {
+	-jfx-rippler-fill: #3ed75a;
+}
+
+
+
+.cancelButton {
+	-fx-background-color: rgba(249, 176, 180, 0.5);
+	-fx-background-radius: 5px;
+}
+
+.cancelButton .jfx-rippler {
+	-jfx-rippler-fill: #e81e1e;
+}
+
+
+
+.borderedText {
+	-fx-border-color: rgb(200, 200, 200);
+	-fx-border-width: 2px;
+}
+
+
+
+.greenTableRow {
+	-fx-background-color: rgb(185, 255, 185);
+}
+
+.redTableRow {
+	-fx-background-color: rgb(255, 185, 185);
+}
+
+.blueTableRow {
+	-fx-background-color: rgb(185, 185, 255);
+}
+
+.whiteTableRow {
+	-fx-background-color: #FFFAFF;
+}
+
+
+
+.pagination>.pagination-control>.control-box {
+	-fx-spacing: 10px;
+}
+
+.pagination>.pagination-control>.control-box>.number-button, .pagination>.pagination-control>.control-box>.bullet-button,
+	.pagination>.pagination-control>.control-box>.left-arrow-button,
+	.pagination>.pagination-control>.control-box>.right-arrow-button {
+	-fx-background-color: lightgray, #FAFAFA;
+	-fx-min-width: 50;
+	-fx-min-height: 30;
+	-fx-font-size: 20px;
+}
+
+.pagination>.pagination-control>.control-box>.number-button:hover,
+	.pagination>.pagination-control>.control-box>.bullet-button:hover,
+	.pagination>.pagination-control>.control-box>.left-arrow-button:hover,
+	.pagination>.pagination-control>.control-box>.right-arrow-button:hover
+	{
+	-fx-background-insets: 0;
+	-fx-background-color: lightgray;
+}
+
+.pagination>.pagination-control>.control-box>.number-button:selected,
+	.pagination>.pagination-control>.control-box>.bullet-button:selected {
+	-fx-background-insets: 0;
+	-fx-background-color: #58379A;
+	-fx-text-fill: white;
+}
+
+.pagination {
+	-fx-page-information-visible: false;
+}
+
+
+
+.dialog-pane:header .header-panel {
+  -fx-background-color: #e5e5e5;
+}

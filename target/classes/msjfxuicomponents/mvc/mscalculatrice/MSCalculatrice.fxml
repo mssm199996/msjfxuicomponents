@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="msjfxuicomponents.mvc.mscalculatrice.MSCalculatriceController">
+   <center>
+      <VBox id="calculator" stylesheets="@../CSS/Calculatrice.css">
+          <Label id="display" fx:id="outputTF" maxWidth="1.7976931348623157E308" />
+          <HBox>
+              <Button cancelButton="true" onAction="#onCEClick" text="C" />
+              <Button onAction="#onDELClick" styleClass="buttonEffacer" text="Effacer" />
+              <Button onAction="#onOperatorClick" styleClass="op" text="/" />
+          </HBox>
+          <HBox>
+              <Button onAction="#onNumberClick" text="7" />
+              <Button onAction="#onNumberClick" text="8" />
+              <Button onAction="#onNumberClick" text="9" />
+              <Button onAction="#onOperatorClick" styleClass="op" text="x" />
+          </HBox>
+          <HBox>
+              <Button onAction="#onNumberClick" text="4" />
+              <Button onAction="#onNumberClick" text="5" />
+              <Button onAction="#onNumberClick" text="6" />
+              <Button onAction="#onOperatorClick" styleClass="op" text="-" />
+          </HBox>
+          <HBox>
+              <Button onAction="#onNumberClick" text="1" />
+              <Button onAction="#onNumberClick" text="2" />
+              <Button onAction="#onNumberClick" text="3" />
+              <Button onAction="#onOperatorClick" styleClass="op" text="+" />
+          </HBox>
+          <HBox>
+              <Button onAction="#onNumberClick" styleClass="zero" text="0" />
+              <Button defaultButton="true" onAction="#onOperatorClick" text="=" />
+          </HBox>
+      </VBox>
+   </center>
+</BorderPane>
