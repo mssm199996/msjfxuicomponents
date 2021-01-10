@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="msjfxuicomponents.mvc.mspavenumerique.MSPaveNumeriqueController">
+   <center>
+      <VBox alignment="TOP_CENTER" style="-fx-background-color: rgb(38, 49, 55);" BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane style="-fx-background-color: white;">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <center>
+                  <HBox alignment="CENTER" styleClass="afficheur" stylesheets="@../CSS/PaveNumerique.css">
+                     <children>
+                        <Label fx:id="result" styleClass="afficheurPaveNumerique" stylesheets="@../CSS/GeneralPurposes.css" text="0.0" textFill="#263137">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <BorderPane.margin>
+                        <Insets bottom="2.0" left="1.0" right="1.0" top="1.0" />
+                     </BorderPane.margin>
+                  </HBox>
+               </center>
+               <top>
+                  <HBox fx:id="headerContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="header" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" minHeight="0.0" style="-fx-border-color: green; -fx-font-weight: bold;" textFill="#0a9400" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+               </top>
+            </BorderPane>
+            <HBox alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#sevenAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="7" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton onAction="#eightAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="8" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXButton onAction="#nineAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="9" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#fourAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="4" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXButton onAction="#fiveAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="5" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXButton onAction="#sixAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="6" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#oneAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="1" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXButton layoutX="10.0" layoutY="10.0" onAction="#twoAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="2" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXButton layoutX="80.0" layoutY="10.0" onAction="#threeAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="3" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <JFXButton onAction="#clear" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="C" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXButton onAction="#zeroAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="0" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXButton onAction="#dotAction" prefHeight="60.0" prefWidth="77.0" styleClass="numButton" stylesheets="@../CSS/PaveNumerique.css" text="." textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="220.0">
+               <children>
+                  <JFXButton fx:id="confirmButton" onAction="#confirm" prefHeight="60.0" prefWidth="115.0" styleClass="buttomButton" stylesheets="@../CSS/PaveNumerique.css" text="Confirmer" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font></JFXButton>
+                  <JFXButton cancelButton="true" onAction="#cancel" prefHeight="60.0" prefWidth="115.0" styleClass="buttomButton" stylesheets="@../CSS/PaveNumerique.css" text="Annuler" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></JFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

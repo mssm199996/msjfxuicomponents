@@ -1,0 +1,12 @@
+.numButton{
+	-fx-background-color:  rgb(38, 49, 55);
+	-fx-background-radius: 0px;
+}
+
+.afficheur{
+	-fx-border-color: rgb(38, 49, 55);
+	-fx-background-color: white;
+}
+
+.buttomButton{
+}

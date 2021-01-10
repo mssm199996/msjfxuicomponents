@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="wellFormattedLittleBlackText" stylesheets="@../CSS/GeneralPurposes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="msjfxuicomponents.mvc.mssoftwareupdates.MSSoftwareUpdatesController">
+   <center>
+      <StackPane BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane fx:id="mainContainer">
+               <center>
+                  <SplitPane dividerPositions="0.8">
+                     <items>
+                        <BorderPane>
+                           <center>
+                              <TableView fx:id="tableVersions">
+                                <columns>
+                                    <TableColumn fx:id="indexColumn" prefWidth="75.0" text="N°">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/numero.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                    <TableColumn fx:id="fileUrlColumn" prefWidth="300.0" style="-fx-alignment: center-left;" text="URL du fichier">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/importDocument.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                    <TableColumn fx:id="versionColumn" prefWidth="100.0" text="Version">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/code.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                  <TableColumn fx:id="creationDate" prefWidth="150.0" text="Date de sortie">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/date.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                    <TableColumn fx:id="uploadDate" prefWidth="180.0" text="Date de mise en ligne">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/date.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                    <TableColumn fx:id="downloadColumn" prefWidth="140.0" text="Télécharger">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/downArrow.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                    <TableColumn fx:id="installColumn" prefWidth="120.0" text="Installer">
+                                       <graphic>
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/login.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                </columns>
+                              </TableView>
+                           </center>
+                        </BorderPane>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <children>
+                              <JFXTextArea fx:id="versionDescriptionContainer" labelFloat="true" prefColumnCount="20" promptText="Description des changements" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="5.0" right="5.0" top="20.0" />
+                                 </VBox.margin>
+                              </JFXTextArea>
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+               </center>
+               <top>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                     <top>
+                        <VBox alignment="CENTER" style="-fx-border-color: black;" styleClass="bigHeaderGreenText" BorderPane.alignment="CENTER">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Listes des mise à jour éxistantes" wrappingWidth="400.0">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" />
+                           </BorderPane.margin>
+                        </VBox>
+                     </top>
+                     <center>
+                        <HBox BorderPane.alignment="CENTER">
+                           <children>
+                              <JFXButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#downloadSoftwareVersions" prefHeight="40.0" styleClass="lightCyanButton" HBox.hgrow="ALWAYS">
+                                 <graphic>
+                                    <HBox alignment="CENTER" spacing="15.0">
+                                       <children>
+                                          <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/reset.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label text="Rafraichir la liste des mise à jours" />
+                                          <ImageView fitWidth="30.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/reset.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </HBox>
+                                 </graphic>
+                              </JFXButton>
+                           </children>
+                        </HBox>
+                     </center>
+                  </BorderPane>
+               </top>
+            </BorderPane>
+            <ProgressIndicator fx:id="downloadProgressIndicator" visible="false">
+               <StackPane.margin>
+                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+               </StackPane.margin>
+            </ProgressIndicator>
+         </children>
+      </StackPane>
+   </center>
+</BorderPane>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../CSS/GeneralPurposes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="msjfxuicomponents.mvc.networkscanner.MSNetworkScannerController">
+   <center>
+      <TableView fx:id="remoteMachinesTable" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="indexColumn" prefWidth="75.0" text="N°">
+               <graphic>
+                  <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/numero.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </TableColumn>
+          <TableColumn fx:id="ipAdressColumn" prefWidth="250.0" text="Adresse IP de la machine cible">
+               <graphic>
+                  <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/ipadress.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </TableColumn>
+            <TableColumn fx:id="hostNameColumn" prefWidth="250.0" text="Nom de la machine cible">
+               <graphic>
+                  <ImageView fitHeight="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/computer.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </TableColumn>
+        </columns>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <top>
+      <ToolBar style="-fx-border-width: 0 1 0 0; -fx-border-color: lightgray;" BorderPane.alignment="CENTER">
+        <items>
+            <JFXButton fx:id="scanButton" onAction="#scanNetwork" style="-fx-font-weight: bold;" text="Scanner le réseau">
+               <styleClass>
+                  <String fx:value="lightGreenButton" />
+                  <String fx:value="wellFormattedBlackText" />
+               </styleClass>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/ping.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="stopButton" disable="true" onAction="#stopScan" style="-fx-font-weight: bold;" text="Arreter le scan">
+               <styleClass>
+                  <String fx:value="lightRedButton" />
+                  <String fx:value="wellFormattedBlackText" />
+               </styleClass>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/stop.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="confirmButton" layoutX="250.0" layoutY="10.0" onAction="#confirmHandler" style="-fx-font-weight: bold;" text="Valider la configuration">
+               <styleClass>
+                  <String fx:value="lightBlueButton" />
+                  <String fx:value="wellFormattedBlackText" />
+               </styleClass>
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/checked.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+        </items>
+      </ToolBar>
+   </top>
+   <right>
+      <VBox spacing="15.0" style="-fx-border-color: lightgray;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" style="-fx-border-color: lightgray;">
+               <children>
+                  <Label style="-fx-font-weight: bold;" styleClass="wellFormattedBlackText" text="Configuration du serveur">
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <BorderPane layoutX="16.0" layoutY="93.0">
+               <center>
+                  <JFXTextField fx:id="centralServerIp" labelFloat="true" promptText="IP du serveur centrale" BorderPane.alignment="CENTER" />
+               </center>
+               <left>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../icons/ipadress.png" />
+                     </image>
+                     <BorderPane.margin>
+                        <Insets right="5.0" top="2.0" />
+                     </BorderPane.margin>
+                  </ImageView>
+               </left>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </VBox.margin>
+            </BorderPane>
+            <BorderPane>
+               <center>
+                  <JFXTextField fx:id="databaseUsername" labelFloat="true" promptText="Nom d'utilisateur" BorderPane.alignment="CENTER" />
+               </center>
+               <left>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../icons/username.png" />
+                     </image>
+                     <BorderPane.margin>
+                        <Insets right="5.0" top="2.0" />
+                     </BorderPane.margin></ImageView>
+               </left>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </BorderPane>
+            <BorderPane layoutX="16.0" layoutY="93.0">
+               <left>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../icons/password.png" />
+                     </image>
+                     <BorderPane.margin>
+                        <Insets left="3.0" right="7.0" top="2.0" />
+                     </BorderPane.margin>
+                  </ImageView>
+               </left>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <center>
+                  <JFXPasswordField fx:id="databasePassword" labelFloat="true" promptText="Mot de passe" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+            <BorderPane layoutX="16.0" layoutY="145.0">
+               <left>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../icons/door.png" />
+                     </image>
+                     <BorderPane.margin>
+                        <Insets left="3.0" right="7.0" top="2.0" />
+                     </BorderPane.margin>
+                  </ImageView>
+               </left>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <center>
+                  <JFXTextField fx:id="port" labelFloat="true" promptText="Port" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+            <ProgressIndicator fx:id="progressIndicator" progress="0.0" VBox.vgrow="ALWAYS">
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
+            </ProgressIndicator>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+</BorderPane>

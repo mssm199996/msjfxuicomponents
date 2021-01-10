@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="wellFormattedLittleBlackText" stylesheets="@../CSS/GeneralPurposes.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="msjfxuicomponents.mvc.listecategorizers.ListeCategorizersController">
+   <center>
+      <TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+         <content>
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <top>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                     <top>
+                        <BorderPane BorderPane.alignment="CENTER">
+                           <center>
+                              <ToolBar prefHeight="40.0">
+                                 <items>
+                                    <JFXButton fx:id="addButton" onAction="#addCategorizer" style="-fx-font-size: 20px;" styleClass="lightGreenButton" text="Ajouer un element (F1)">
+                                       <graphic>
+                                          <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/bigPlus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                    <JFXButton fx:id="deleteButton" onAction="#deleteCategorizer" style="-fx-font-size: 20px;" styleClass="lightRedButton" text="Supprimer un element (Suppr)">
+                                       <graphic>
+                                          <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/bigMinus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                    <Pane HBox.hgrow="ALWAYS" />
+                                    <VBox alignment="CENTER" />
+                                 </items>
+                              </ToolBar>
+                           </center>
+                        </BorderPane>
+                     </top>
+                     <center>
+                        <BorderPane BorderPane.alignment="CENTER">
+                           <center>
+                              <JFXTextField fx:id="nomCategorizer" labelFloat="true" onKeyReleased="#search" promptText="Nom de l'element" />
+                           </center>
+                           <left>
+                              <ImageView fitWidth="25.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../icons/name.png" />
+                                 </image>
+                                 <BorderPane.margin>
+                                    <Insets right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ImageView>
+                           </left>
+                           <BorderPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                           </BorderPane.margin>
+                        </BorderPane>
+                     </center>
+                  </BorderPane>
+               </top>
+               <center>
+                  <SplitPane dividerPositions="0.7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                     <items>
+                        <TableView fx:id="tableCategorizers" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <columns>
+                              <TableColumn fx:id="indexColumn" prefWidth="75.0" text="N°">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/numero.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                              <TableColumn fx:id="nomColumn" prefWidth="400.0" text="Nom de l'element">
+                                 <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../icons/name.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </TableColumn>
+                           </columns>
+                        </TableView>
+                        <BorderPane>
+                           <center>
+                              <TableView fx:id="childsTableCategorizers" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                 <columns>
+                                    <TableColumn fx:id="childsCategorizersIndexColumn" prefWidth="75.0" text="N°">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/numero.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                    <TableColumn fx:id="childsCategorizersNomColumn" prefWidth="400.0" text="Nom de l'element">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/name.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </TableColumn>
+                                 </columns>
+                              </TableView>
+                           </center>
+                           <top>
+                              <HBox spacing="5.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <JFXButton onAction="#addChildCategorizer" style="-fx-font-size: 20px;" styleClass="lightGreenButton" text="Ajouter un élément">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/bigPlus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                    <JFXButton onAction="#deleteChildCategorizer" style="-fx-font-size: 20px;" styleClass="lightRedButton" text="Supprimer un élément">
+                                       <graphic>
+                                          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/bigMinus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </JFXButton>
+                                 </children>
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </HBox>
+                           </top>
+                        </BorderPane>
+                     </items>
+                  </SplitPane>
+               </center>
+            </BorderPane>
+         </content>
+         <graphic>
+            <MenuButton fx:id="shortcutsDescriptionMenuButton" mnemonicParsing="false" styleClass="wellFormattedLittleMediumBlackText" text="Liste des racourcis clavier">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../../../MSMarket/src/main/java/MVC/Icons/help.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
+         </graphic>
+      </TitledPane>
+   </center>
+</BorderPane>
