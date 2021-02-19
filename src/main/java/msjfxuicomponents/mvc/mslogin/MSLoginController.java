@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 
+import DomainModel.ICompte;
+import msdatabaseutils.ICompteValidator;
 import org.hibernate.service.spi.ServiceException;
 
 import com.github.sarxos.webcam.Webcam;
@@ -45,8 +47,6 @@ import msjfxuicomponents.mvc.mssauvegardebuilder.MSSauvegardeBuilderStage;
 import msjfxuicomponents.mvc.mssauvegardeloader.MSSauvegardeLoaderStage;
 import msjfxuicomponents.mvc.mssoftwarefeatures.MSSoftwareFeaturesStage;
 import msjfxuicomponents.mvc.mssoftwareupdates.MSSoftwareUpdatesStage;
-import msjfxuicomponents.others.ICompte;
-import msjfxuicomponents.others.ICompteValidator;
 import msjfxuicomponents.others.WebcamHandler;
 import mssoftutils.xml.ApplicationStatupXMLConfiguration;
 

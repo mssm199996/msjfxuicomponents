@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.stream.Stream;
 
+import DomainModel.ICompte;
 import DomainModel.ISoftwareFeatureType;
 import javafx.beans.property.BooleanProperty;
 import msdatabaseutils.ITypeDroit;
 import msjfxuicomponents.mvc.mslogin.MSLoginController;
-import msjfxuicomponents.others.ICompte;
 
 public interface IFeaturesRightsRestrictionsHolder extends RestrictionsHolder, IFeaturesRestrictionHolder {
 

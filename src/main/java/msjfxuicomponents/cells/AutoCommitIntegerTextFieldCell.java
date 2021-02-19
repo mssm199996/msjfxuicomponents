@@ -4,7 +4,7 @@ import javafx.util.StringConverter;
 
 public abstract class AutoCommitIntegerTextFieldCell<T> extends AutoCommitNumberTextFieldCell<T, Integer> {
 
-	private static StringConverter<Integer> CONVERTER = new StringConverter<Integer>() {
+	public static StringConverter<Integer> CONVERTER = new StringConverter<Integer>() {
 		@Override
 		public Integer fromString(String v) {
 			return Integer.parseInt(v);

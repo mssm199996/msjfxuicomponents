@@ -5,6 +5,8 @@ import java.net.SocketException;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import DomainModel.ICompte;
+import msdatabaseutils.ICompteValidator;
 import org.hibernate.HibernateException;
 
 import DomainModel.IConfiguration;
@@ -19,8 +21,6 @@ import msjfxuicomponents.mvc.MainApplicationStage;
 import msjfxuicomponents.mvc.SimpleStageType;
 import msjfxuicomponents.mvc.msdatabaserepair.MSHibernateDatabaseRepairStage;
 import msjfxuicomponents.mvc.networkscanner.MSMySQLNetworkScannerStage;
-import msjfxuicomponents.others.ICompte;
-import msjfxuicomponents.others.ICompteValidator;
 import mssoftutils.update.SoftwareVersionDownloader.Software;
 
 public abstract class MSLoginStage<S extends MainApplicationStage<?>> extends SimpleStageType<MSLoginController> {
