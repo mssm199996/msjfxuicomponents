@@ -259,9 +259,10 @@ public class MSLoginController implements Initializable {
 	private void askForLicense() {
 		this.updateComponentsState(true, 1.0);
 
-		if (MSJFXUIComponentsHolder.MS_ACTIVATION_STAGE == null)
+		if (MSJFXUIComponentsHolder.MS_ACTIVATION_STAGE == null) {
 			MSJFXUIComponentsHolder.MS_ACTIVATION_STAGE = new MSActivationStage(this.applicationName,
 					this.copyrightHandler);
+		}
 
 		MSJFXUIComponentsHolder.MS_ACTIVATION_STAGE.centerOnScreen();
 		MSJFXUIComponentsHolder.MS_ACTIVATION_STAGE.setOnCloseRequest(event -> {

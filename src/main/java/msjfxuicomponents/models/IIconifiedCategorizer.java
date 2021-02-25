@@ -19,9 +19,9 @@ public interface IIconifiedCategorizer extends ICategorizer {
 
     public default String fromGlyphToString(GlyphIcons glyphIcons) {
         if (glyphIcons != null)
-            return glyphIcons.characterToString();
+            return glyphIcons.name();
         else
-            return FontAwesomeIcon.ANDROID.characterToString();
+            return FontAwesomeIcon.ANDROID.name();
     }
 
     public default GlyphIcons fromStringToGlyph(String name) {
@@ -37,9 +37,8 @@ public interface IIconifiedCategorizer extends ICategorizer {
                     if (icon == null) {
                         icon = MaterialIcon.valueOf(name);
 
-                        if (icon == null) {
+                        if (icon == null)
                             icon = OctIcon.valueOf(name);
-                        }
                     }
                 }
             }

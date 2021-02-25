@@ -1,16 +1,6 @@
 package msjfxuicomponents.uicomponents;
 
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-
 import com.jfoenix.controls.JFXMasonryPane;
-
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -19,170 +9,192 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import msjfxuicomponents.others.IBootstrapCardIdentifiedEntity;
 
+import java.io.ByteArrayInputStream;
+import java.util.*;
+import java.util.function.BiConsumer;
+
 public abstract class MSBootstrapCardBasket<T extends IBootstrapCardIdentifiedEntity, S extends MSBootstrapCard>
-		extends JFXMasonryPane {
+        extends JFXMasonryPane {
 
-	private List<T> elements = new LinkedList<>();
-	private Map<Integer, S> displayedCards = new HashMap<>();
-	private Map<S, T> displayedCardsToEntities = new HashMap<>();
-	private Map<T, S> basket = new HashMap<>();
+    private Set<T> elements = new HashSet<T>();
+    private Map<Integer, S> displayedCards = new HashMap<>();
+    private Map<S, T> displayedCardsToEntities = new HashMap<>();
+    private Map<T, S> basket = new HashMap<>();
 
-	private BiConsumer<T, S> onBasketChanged;
+    private BiConsumer<T, S> onBasketChanged;
 
-	private S selectedCard;
-	private Background lastSelectedCardBackground, cardSelectionBackground = new Background(
-			new BackgroundFill(Color.rgb(0, 0, 255, 0.2), CornerRadii.EMPTY, Insets.EMPTY));
+    private S selectedCard;
+    private Background lastSelectedCardBackground, cardSelectionBackground = new Background(
+            new BackgroundFill(Color.rgb(0, 0, 255, 0.3), CornerRadii.EMPTY, Insets.EMPTY));
 
-	// ---------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------
 
-	public void addElements(Collection<T> elements) {
-		for (T element : elements)
-			this.addMSBootstrapCard(element);
+    public void addElements(Collection<T> elements) {
+        for (T element : elements)
+            this.addMSBootstrapCard(element);
 
-		this.elements.addAll(elements);
-	}
+        this.elements.addAll(elements);
+    }
 
-	public void clearDisplayedElements() {
-		for (T element : this.elements)
-			this.removeMSBootstrapCard(element);
+    public void updateElements(Collection<T> elements) {
+        for (T element : elements) {
+            S card = this.displayedCards.get(element.getBoostrapCardId());
 
-		this.elements.clear();
-	}
+            // Update the displayed element by redrawing it
+            this.draw(element, card);
 
-	public void clearBasket() {
-		this.basket.clear();
+            // If the modified element was in the basket, modify also its card to have latests update
+            if (this.basket.containsKey(element)) {
+                this.basket.remove(element);
+                this.basket.put(element, card);
+            }
+        }
+    }
 
-		List<T> intermediate = new ArrayList<>(this.elements.size());
+    public void clearDisplayedElements() {
+        for (T element : this.elements)
+            this.removeMSBootstrapCard(element);
 
-		for (T element : this.elements)
-			intermediate.add(element);
+        this.elements.clear();
+    }
 
-		this.clearDisplayedElements();
-		this.addElements(intermediate);
-	}
+    public void clearBasket() {
+        this.basket.clear();
 
-	// ---------------------------------------------------------------------------------------------------------
+        List<T> intermediate = new ArrayList<>(this.elements.size());
 
-	public void addMSBootstrapCard(T element) {
-		boolean alreadyAdded = this.displayedCards.containsKey(element.getBoostrapCardId());
+        for (T element : this.elements)
+            intermediate.add(element);
 
-		if (!alreadyAdded) {
-			S card;
+        this.clearDisplayedElements();
+        this.addElements(intermediate);
+    }
 
-			boolean itemAlreadyInBasket = this.basket.containsKey(element);
+    // ---------------------------------------------------------------------------------------------------------
 
-			if (!itemAlreadyInBasket) {
-				S recoveryCard = this.constructBootstrapCard();
-				recoveryCard.setOnCardActionTriggered(() -> {
-					if (!recoveryCard.isAvailable())
-						this.basket.remove(element);
-					else {
-						this.basket.put(element, recoveryCard);
-					}
+    public void addMSBootstrapCard(T element) {
+        boolean alreadyAdded = this.displayedCards.containsKey(element.getBoostrapCardId());
 
-					if (this.onBasketChanged != null)
-						this.onBasketChanged.accept(element, recoveryCard);
-				});
+        if (!alreadyAdded) {
+            S card;
 
-				recoveryCard.setOnMouseClicked(e -> {
-					if (this.selectedCard != null)
-						this.selectedCard.setBackground(this.lastSelectedCardBackground);
+            boolean itemAlreadyInBasket = this.basket.containsKey(element);
 
-					this.selectedCard = recoveryCard;
-					this.lastSelectedCardBackground = this.selectedCard.getBackground();
-					this.selectedCard.setBackground(this.cardSelectionBackground);
-				});
+            if (!itemAlreadyInBasket) {
+                S recoveryCard = this.constructBootstrapCard();
+                recoveryCard.setOnCardActionTriggered(() -> {
+                    if (!recoveryCard.isAvailable())
+                        this.basket.remove(element);
+                    else {
+                        this.basket.put(element, recoveryCard);
+                    }
 
-				this.draw(element, recoveryCard);
+                    if (this.onBasketChanged != null)
+                        this.onBasketChanged.accept(element, recoveryCard);
+                });
 
-				this.basket.put(element, recoveryCard);
+                recoveryCard.setOnMouseClicked(e -> {
+                    if (this.selectedCard != null)
+                        this.selectedCard.setBackground(this.lastSelectedCardBackground);
 
-				card = recoveryCard;
-			} else
-				card = this.basket.get(element);
+                    this.selectedCard = recoveryCard;
+                    this.lastSelectedCardBackground = this.selectedCard.getBackground();
+                    this.selectedCard.setBackground(this.cardSelectionBackground);
+                });
 
-			this.displayedCards.put(element.getBoostrapCardId(), card);
-			this.displayedCardsToEntities.put(card, element);
-			this.getChildren().add(card);
-		}
-	}
+                this.draw(element, recoveryCard);
 
-	public void removeMSBootstrapCard(T element) {
-		S msBootstrapCard = this.displayedCards.get(element.getBoostrapCardId());
+                this.basket.put(element, recoveryCard);
 
-		if (msBootstrapCard != null) {
-			this.displayedCards.remove(element.getBoostrapCardId());
-			this.displayedCardsToEntities.remove(msBootstrapCard);
-			this.getChildren().remove(msBootstrapCard);
-		}
-	}
+                card = recoveryCard;
+            } else {
+                card = this.basket.get(element);
+            }
 
-	// ---------------------------------------------------------------------------------------------------------
+            this.displayedCards.put(element.getBoostrapCardId(), card);
+            this.displayedCardsToEntities.put(card, element);
+            this.getChildren().add(card);
+        } else {
+            this.displayedCards.get(element.getBoostrapCardId());
+        }
+    }
 
-	public Map<Integer, S> getDisplayedCards() {
-		return displayedCards;
-	}
+    public void removeMSBootstrapCard(T element) {
+        S msBootstrapCard = this.displayedCards.get(element.getBoostrapCardId());
 
-	public void setDisplayedCards(Map<Integer, S> displayedCards) {
-		this.displayedCards = displayedCards;
-	}
+        if (msBootstrapCard != null) {
+            this.displayedCards.remove(element.getBoostrapCardId());
+            this.displayedCardsToEntities.remove(msBootstrapCard);
+            this.getChildren().remove(msBootstrapCard);
+        }
+    }
 
-	public List<T> getElements() {
-		return elements;
-	}
+    // ---------------------------------------------------------------------------------------------------------
 
-	public void setElements(List<T> elements) {
-		this.elements = elements;
-	}
+    public Map<Integer, S> getDisplayedCards() {
+        return displayedCards;
+    }
 
-	public Map<T, S> getBasket() {
-		return basket;
-	}
+    public void setDisplayedCards(Map<Integer, S> displayedCards) {
+        this.displayedCards = displayedCards;
+    }
 
-	public void setBasket(Map<T, S> basket) {
-		this.basket = basket;
-	}
+    public Set<T> getElements() {
+        return elements;
+    }
 
-	public BiConsumer<T, S> getOnBasketChanged() {
-		return onBasketChanged;
-	}
+    public void setElements(Set<T> elements) {
+        this.elements = elements;
+    }
 
-	public void setOnBasketChanged(BiConsumer<T, S> onBasketChanged) {
-		this.onBasketChanged = onBasketChanged;
-	}
+    public Map<T, S> getBasket() {
+        return basket;
+    }
 
-	public T getSelectedEntity() {
-		if (this.getSelectedCard() != null)
-			return this.displayedCardsToEntities.get(this.getSelectedCard());
+    public void setBasket(Map<T, S> basket) {
+        this.basket = basket;
+    }
 
-		return null;
-	}
+    public BiConsumer<T, S> getOnBasketChanged() {
+        return onBasketChanged;
+    }
 
-	public S getSelectedCard() {
-		return selectedCard;
-	}
+    public void setOnBasketChanged(BiConsumer<T, S> onBasketChanged) {
+        this.onBasketChanged = onBasketChanged;
+    }
 
-	public void setSelectedCard(S selectedCard) {
-		this.selectedCard = selectedCard;
-	}
+    public T getSelectedEntity() {
+        if (this.getSelectedCard() != null)
+            return this.displayedCardsToEntities.get(this.getSelectedCard());
 
-	public Background getCardSelectionBackground() {
-		return cardSelectionBackground;
-	}
+        return null;
+    }
 
-	public void setCardSelectionBackground(Background cardSelectionBackground) {
-		this.cardSelectionBackground = cardSelectionBackground;
-	}
+    public S getSelectedCard() {
+        return selectedCard;
+    }
 
-	public void draw(T entity, S card) {
-		card.setHeaderText(entity.getBoostrapCardHeader());
-		card.setSubHeaderText(entity.getBoostrapCardSubHeader());
+    public void setSelectedCard(S selectedCard) {
+        this.selectedCard = selectedCard;
+    }
 
-		if (entity.getBoostrapCardImageByteArray() != null) {
-			Image image = new Image(new ByteArrayInputStream(entity.getBoostrapCardImageByteArray()));
-			card.setImageContent(image);
-		}
-	}
+    public Background getCardSelectionBackground() {
+        return cardSelectionBackground;
+    }
 
-	public abstract S constructBootstrapCard();
+    public void setCardSelectionBackground(Background cardSelectionBackground) {
+        this.cardSelectionBackground = cardSelectionBackground;
+    }
+
+    public void draw(T entity, S card) {
+        card.setHeaderText(entity.getBoostrapCardHeader());
+        card.setSubHeaderText(entity.getBoostrapCardSubHeader());
+
+        if (entity.getBoostrapCardImageByteArray() != null) {
+            Image image = new Image(new ByteArrayInputStream(entity.getBoostrapCardImageByteArray()));
+            card.setImageContent(image);
+        }
+    }
+
+    public abstract S constructBootstrapCard();
 }
