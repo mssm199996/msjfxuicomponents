@@ -162,6 +162,7 @@ public class MSAlertsDisplayer {
 
 		JFXTextField dialogContent = new JFXTextField(defaultValue);
 		dialogContent.setPromptText(content);
+		dialogContent.setMinWidth(400);
 
 		Alert alert = this.constructAlert("win.sound.default", AlertType.CONFIRMATION, title, header, dialogContent,
 				mother, okButton, okButton, cancelButton);

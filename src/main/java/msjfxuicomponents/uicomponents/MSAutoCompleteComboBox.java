@@ -19,6 +19,7 @@ public class MSAutoCompleteComboBox<T> extends ComboBox<T> {
     private Function<String, Collection<T>> entitiesLoader = null;
     private Double maxAllowedWidth = 175.0;
     private Double popupMaxHeight = 200.0;
+    private Double popupMinHeight = 50.0;
     private Double rowHeight = 25.0;
 
     private boolean triggerEvent = true;
@@ -66,8 +67,8 @@ public class MSAutoCompleteComboBox<T> extends ComboBox<T> {
             this.getEditor().positionCaret((getEditor().getText().length()));
         }
 
-        if(this.skin != null) {
-            this.skin.msResize(this.getItems().size(), this.getRowHeight(), this.getPopupMaxHeight());
+        if (this.skin != null) {
+            this.skin.msResize(this.getItems().size(), this.getRowHeight(), this.popupMinHeight, this.popupMaxHeight);
             this.show();
         }
     }
@@ -125,7 +126,7 @@ public class MSAutoCompleteComboBox<T> extends ComboBox<T> {
             if (isFocused) {
                 this.show();
 
-                this.skin.msResize(this.getItems().size(), this.getRowHeight(), this.getPopupMaxHeight());
+                this.skin.msResize(this.getItems().size(), this.getRowHeight(), this.popupMinHeight, this.popupMaxHeight);
             } else
                 this.hide();
         });
@@ -184,8 +185,16 @@ public class MSAutoCompleteComboBox<T> extends ComboBox<T> {
         return this.popupMaxHeight;
     }
 
+    public Double getPopupMinHeight() {
+        return this.popupMinHeight;
+    }
+
     public void setPopupMaxHeight(Double popupMaxHeight) {
         this.popupMaxHeight = popupMaxHeight;
+    }
+
+    public void setPopupMinHeight(Double popupMinHeight) {
+        this.popupMinHeight = popupMinHeight;
     }
 
     public Double getRowHeight() {
@@ -199,7 +208,7 @@ public class MSAutoCompleteComboBox<T> extends ComboBox<T> {
     @Override
     protected Skin<?> createDefaultSkin() {
         this.skin = new MSComboBoxListViewSkin<>(this);
-        this.skin.msResize(this.getItems().size(), this.getRowHeight(), this.getPopupMaxHeight());
+        this.skin.msResize(this.getItems().size(), this.getRowHeight(), this.popupMinHeight, this.popupMaxHeight);
 
         return this.skin;
     }
@@ -209,8 +218,9 @@ public class MSAutoCompleteComboBox<T> extends ComboBox<T> {
             super(comboBox);
         }
 
-        public void msResize(int rows, double rowHeight, double maxHeight) {
+        public void msResize(int rows, double rowHeight, double minHeight, double maxHeight) {
             double height = Math.min(rows * rowHeight, maxHeight);
+            height = Math.max(height, minHeight);
 
             this.getListView().setMinHeight(height);
             this.getListView().setMaxHeight(height);
