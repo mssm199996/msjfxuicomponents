@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import com.sun.glass.ui.Screen;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -18,7 +19,9 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import msjfxuicomponents.MSJFXUIComponentsHolder;
+import msjfxuicomponents.MSLightweightComponentsHolder;
 import msjfxuicomponents.MSLightweightJFXUIComponentsHolder;
+import msjfxuicomponents.others.MSAlertsDisplayer;
 
 public class MSIntroductionStage extends Stage {
 
@@ -42,7 +45,6 @@ public class MSIntroductionStage extends Stage {
 		this.setMaximized(true);
 		this.getIcons().addAll(MSLightweightJFXUIComponentsHolder.WINDOW_ICON);
 		this.setOnCloseRequest(event -> {
-			System.exit(0);
 		});
 		this.show();
 
@@ -77,5 +79,8 @@ public class MSIntroductionStage extends Stage {
 				getClass().getResource("/msjfxuicomponents/mvc/icons/red_left_arrow.png").toString());
 		MSLightweightJFXUIComponentsHolder.RIGHT_RED_ARROW_ICON = new Image(
 				getClass().getResource("/msjfxuicomponents/mvc/icons/red_right_arrow.png").toString());
+
+		MSLightweightJFXUIComponentsHolder.PRINT_ICON = new Image(
+				getClass().getResource("/msjfxuicomponents/mvc/icons/printBarcode.png").toString());
 	}
 }
