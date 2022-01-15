@@ -37,7 +37,7 @@ public class MSAlertsDisplayer {
 
         ComboBox<T> elementsContainer = new ComboBox<>();
         elementsContainer.getItems().addAll(content);
-        elementsContainer.setPromptText("Votre choix: ");
+        elementsContainer.setPromptText("Veuillez selectioner un élément dans la liste déroulante");
 
         Alert alert = this.constructAlert("win.sound.default", AlertType.CONFIRMATION, title, header, elementsContainer,
                 mother, okButton, okButton, cancelButton);

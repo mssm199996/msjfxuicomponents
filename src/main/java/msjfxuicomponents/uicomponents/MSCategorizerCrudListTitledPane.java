@@ -1,7 +1,6 @@
 package msjfxuicomponents.uicomponents;
 
 import com.jfoenix.controls.JFXButton;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -12,210 +11,249 @@ import javafx.stage.Stage;
 import msdatabaseutils.ICategorizer;
 import msjfxuicomponents.MSJFXUIComponentsHolder;
 import msjfxuicomponents.MSLightweightJFXUIComponentsHolder;
+import msjfxuicomponents.cells.IEditableCategorizeListViewCell;
 import msjfxuicomponents.others.ICategorizerAdder;
 import msjfxuicomponents.others.ICategorizerControllerAdder;
 import msjfxuicomponents.others.ICategorizerDeleter;
+import msjfxuicomponents.others.ICategorizerUpdater;
 
 public class MSCategorizerCrudListTitledPane<T extends ICategorizer> extends MSSimpleCategorizerListTitledPane<T> {
 
-	protected JFXButton addButton, deleteButton;
-	protected SimpleStringProperty addButtonCaption, deleteButtonCaption;
+    protected JFXButton addButton, deleteButton;
+    protected SimpleStringProperty addButtonCaption, deleteButtonCaption;
 
-	protected ICategorizerControllerAdder<T> categorizerControllerAdder;
-	protected ICategorizerAdder<T> categorizerAdder = null;
-	protected ICategorizerDeleter<T> categorizerDeleter = null;
+    protected ICategorizerControllerAdder<T> categorizerControllerAdder;
+    protected ICategorizerAdder<T> categorizerAdder = null;
+    protected ICategorizerDeleter<T> categorizerDeleter = null;
+    protected ICategorizerUpdater<T> categorizerUpdater = null;
 
-	protected Runnable beforeAddCallback, beforeDeleteCallback;
+    protected Runnable beforeAddCallback, beforeDeleteCallback, onCustomAdd;
 
-	@Override
-	public void constructModules() {
-		this.constructProperties();
-		this.constructImageView();
-		this.constructAddButton();
-		this.constructDeleteButton();
-		this.constructListView();
-	}
+    @Override
+    public void constructModules() {
+        this.constructProperties();
+        this.constructImageView();
+        this.constructAddButton();
+        this.constructDeleteButton();
+        this.constructListView();
+    }
 
-	@Override
-	public Pane constructTopContainer() {
-		HBox hbox = new HBox();
-		hbox.setAlignment(Pos.CENTER_LEFT);
-		hbox.getChildren().addAll(this.addButton, this.deleteButton);
-		hbox.setMaxWidth(Double.MAX_VALUE);
-		hbox.setSpacing(5.0);
+    @Override
+    public void constructListView() {
+        super.constructListView();
 
-		HBox.setHgrow(this.addButton, Priority.ALWAYS);
-		HBox.setHgrow(this.deleteButton, Priority.ALWAYS);
+        this.listView.setCellFactory(call -> new IEditableCategorizeListViewCell<T>(this.listView) {
 
-		return hbox;
-	}
+            @Override
+            public void onUpdate(T entity) {
+                if (categorizerUpdater != null)
+                    categorizerUpdater.updateCategorizerEntity(entity);
+            }
+        });
+    }
 
-	public void constructAddButton() {
-		this.addButton = new JFXButton("", new ImageView(MSLightweightJFXUIComponentsHolder.LITTLE_PLUS_ICON));
-		this.addButton.setMaxWidth(Double.MAX_VALUE);
-		this.addButton.textProperty().bind(this.addButtonCaption);
-		this.addButton.getStyleClass().add("lightGreenButton");
-		this.addButton.setOnMouseClicked(event -> {
-			if (this.beforeAddCallback != null)
-				this.beforeAddCallback.run();
+    @Override
+    public Pane constructTopContainer() {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER_LEFT);
+        hbox.getChildren().addAll(this.addButton, this.deleteButton);
+        hbox.setMaxWidth(Double.MAX_VALUE);
+        hbox.setSpacing(5.0);
 
-			Stage mother = this.getStage();
-			String title = mother.getTitle();
+        HBox.setHgrow(this.addButton, Priority.ALWAYS);
+        HBox.setHgrow(this.deleteButton, Priority.ALWAYS);
 
-			if (this.categorizerAdder != null || this.categorizerControllerAdder != null) {
-				T entity = null;
+        return hbox;
+    }
 
-				if (this.categorizerControllerAdder != null) {
-					if (this.categorizerControllerAdder.isPrerequisiesAvailable()) {
-						this.categorizerControllerAdder.getStage().showAndWait();
+    public void constructAddButton() {
+        this.addButton = new JFXButton("", new ImageView(MSLightweightJFXUIComponentsHolder.LITTLE_PLUS_ICON));
+        this.addButton.setMaxWidth(Double.MAX_VALUE);
+        this.addButton.textProperty().bind(this.addButtonCaption);
+        this.addButton.getStyleClass().add("lightGreenButton");
+        this.addButton.setOnMouseClicked(event -> {
+            if (this.beforeAddCallback != null)
+                this.beforeAddCallback.run();
 
-						entity = this.categorizerControllerAdder.getConstructedCategorizer();
-					} else {
-						MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayErrorAlert(title, "Nouvelle entitée",
-								this.categorizerControllerAdder.prerequisiesUnavailableMessage(), mother);
+            if (this.onCustomAdd != null) {
+                this.onCustomAdd.run();
+            } else {
+                Stage mother = this.getStage();
+                String title = mother.getTitle();
 
-						return;
-					}
-				} else {
-					String header = "Nouvelle entitée";
-					String content = "Veuillez saisir une désignation";
+                if (this.categorizerAdder != null || this.categorizerControllerAdder != null) {
+                    T entity = null;
 
-					String designation = MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayStringAlert(title, header,
-							content, "", mother);
+                    if (this.categorizerControllerAdder != null) {
+                        if (this.categorizerControllerAdder.isPrerequisiesAvailable()) {
+                            this.categorizerControllerAdder.getStage().showAndWait();
 
-					if (designation != null && !designation.equals("")) {
-						entity = this.categorizerAdder.createEntity();
+                            entity = this.categorizerControllerAdder.getConstructedCategorizer();
+                        } else {
+                            MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayErrorAlert(title, "Nouvelle entitée",
+                                    this.categorizerControllerAdder.prerequisiesUnavailableMessage(), mother);
 
-						if (designation != null)
-							entity.setDesignation(designation);
-					}
-				}
+                            return;
+                        }
+                    } else {
+                        String header = "Nouvelle entitée";
+                        String content = "Veuillez saisir une désignation";
 
-				if (entity != null) {
-					final T persistable = entity;
+                        String designation = MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayStringAlert(title, header,
+                                content, "", mother);
 
-					(new Thread(() -> {
-						this.categorizerAdder.insertEntity(persistable);
-					})).start();
+                        if (designation != null && !designation.equals("")) {
+                            entity = this.categorizerAdder.createEntity();
 
-					this.listView.getItems().add(entity);
-					this.listView.getSelectionModel().select(entity);
-				}
-			} else
-				MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayErrorAlert("MSJFXUIComponents", "Fatal error...",
-						"No adder specified !", mother);
-		});
-	}
+                            if (designation != null)
+                                entity.setDesignation(designation);
+                        }
+                    }
 
-	public void constructDeleteButton() {
-		this.deleteButton = new JFXButton("", new ImageView(MSLightweightJFXUIComponentsHolder.LITTLE_MINUS_ICON));
-		this.deleteButton.setMaxWidth(Double.MAX_VALUE);
-		this.deleteButton.textProperty().bind(this.deleteButtonCaption);
-		this.deleteButton.getStyleClass().add("lightRedButton");
-		this.deleteButton.setOnMouseClicked(event -> {
-			if (this.beforeDeleteCallback != null)
-				this.beforeDeleteCallback.run();
+                    if (entity != null) {
+                        final T persistable = entity;
 
-			Stage mother = this.getStage();
+                        (new Thread(() -> {
+                            this.categorizerAdder.insertEntity(persistable);
+                        })).start();
 
-			if (this.categorizerDeleter != null) {
-				T entity = this.listView.getSelectionModel().getSelectedItem();
+                        this.listView.getItems().add(entity);
+                        this.listView.getSelectionModel().select(entity);
+                    }
+                } else
+                    MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayErrorAlert("MSJFXUIComponents", "Fatal error...",
+                            "No adder specified !", mother);
+            }
+        });
+    }
 
-				String title = mother.getTitle();
-				String header = "Suppression de la sélection";
+    public void constructDeleteButton() {
+        this.deleteButton = new JFXButton("", new ImageView(MSLightweightJFXUIComponentsHolder.LITTLE_MINUS_ICON));
+        this.deleteButton.setMaxWidth(Double.MAX_VALUE);
+        this.deleteButton.textProperty().bind(this.deleteButtonCaption);
+        this.deleteButton.getStyleClass().add("lightRedButton");
+        this.deleteButton.setOnMouseClicked(event -> {
+            if (this.beforeDeleteCallback != null)
+                this.beforeDeleteCallback.run();
 
-				if (entity != null) {
-					String content = "Veuillez confirmer pour procéder à la suppression";
+            Stage mother = this.getStage();
 
-					boolean confirmation = MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayConfirmationAlert(title,
-							header, content, mother);
+            if (this.categorizerDeleter != null) {
+                T entity = this.listView.getSelectionModel().getSelectedItem();
 
-					if (confirmation) {
-						(new Thread(() -> {
-							this.categorizerDeleter.deleteEntity(entity);
-						})).start();
+                String title = mother.getTitle();
+                String header = "Suppression de la sélection";
 
-						this.listView.getItems().remove(entity);
-					}
-				} else
-					MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayErrorAlert(title, header,
-							"Erreur... veuillez d'abords selectionner un élement dans la liste !", mother);
-			} else
-				MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayErrorAlert("MSJFXUIComponents", "Fatal error...",
-						"No deleter specified !", mother);
-		});
-	}
+                if (entity != null) {
+                    String content = "Veuillez confirmer pour procéder à la suppression";
 
-	protected void constructProperties() {
-		this.addButtonCaption = new SimpleStringProperty("Add entity");
-		this.deleteButtonCaption = new SimpleStringProperty("Delete entity");
-	}
+                    boolean confirmation = MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayConfirmationAlert(title,
+                            header, content, mother);
 
-	public String getAddButtonCaption() {
-		return addButtonCaption.getValue();
-	}
+                    if (confirmation) {
+                        (new Thread(() -> {
+                            this.categorizerDeleter.deleteEntity(entity);
+                        })).start();
 
-	public void setAddButtonCaption(String addButtonCaption) {
-		this.addButtonCaption.setValue(addButtonCaption);
-	}
+                        this.listView.getItems().remove(entity);
+                    }
+                } else
+                    MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayErrorAlert(title, header,
+                            "Erreur... veuillez d'abords selectionner un élement dans la liste !", mother);
+            } else
+                MSJFXUIComponentsHolder.MS_ALERT_DISPLAYER.displayErrorAlert("MSJFXUIComponents", "Fatal error...",
+                        "No deleter specified !", mother);
+        });
+    }
 
-	public String getDeleteButtonCaption() {
-		return deleteButtonCaption.getValue();
-	}
+    protected void constructProperties() {
+        this.addButtonCaption = new SimpleStringProperty("Add entity");
+        this.deleteButtonCaption = new SimpleStringProperty("Delete entity");
+    }
 
-	public void setDeleteButtonCaption(String deleteButtonCaption) {
-		this.deleteButtonCaption.setValue(deleteButtonCaption);
-	}
+    public String getAddButtonCaption() {
+        return addButtonCaption.getValue();
+    }
 
-	public ICategorizerAdder<T> getCategorizerAdder() {
-		return categorizerAdder;
-	}
+    public void setAddButtonCaption(String addButtonCaption) {
+        this.addButtonCaption.setValue(addButtonCaption);
+    }
 
-	public void setCategorizerAdder(ICategorizerAdder<T> categorizerAdder) {
-		this.categorizerAdder = categorizerAdder;
-	}
+    public String getDeleteButtonCaption() {
+        return deleteButtonCaption.getValue();
+    }
 
-	public ICategorizerDeleter<T> getCategorizerDeleter() {
-		return categorizerDeleter;
-	}
+    public void setDeleteButtonCaption(String deleteButtonCaption) {
+        this.deleteButtonCaption.setValue(deleteButtonCaption);
+    }
 
-	public void setCategorizerDeleter(ICategorizerDeleter<T> categorizerDeleter) {
-		this.categorizerDeleter = categorizerDeleter;
-	}
+    public ICategorizerAdder<T> getCategorizerAdder() {
+        return categorizerAdder;
+    }
 
-	public ICategorizerControllerAdder<T> getCategorizerControllerAdder() {
-		return categorizerControllerAdder;
-	}
+    public void setCategorizerAdder(ICategorizerAdder<T> categorizerAdder) {
+        this.categorizerAdder = categorizerAdder;
+    }
 
-	public void setCategorizerControllerAdder(ICategorizerControllerAdder<T> categorizerControllerAdder) {
-		this.categorizerControllerAdder = categorizerControllerAdder;
-	}
+    public ICategorizerDeleter<T> getCategorizerDeleter() {
+        return categorizerDeleter;
+    }
 
-	public T getSelectedItem() {
-		return this.listView.getSelectionModel().getSelectedItem();
-	}
+    public void setCategorizerDeleter(ICategorizerDeleter<T> categorizerDeleter) {
+        this.categorizerDeleter = categorizerDeleter;
+    }
 
-	public void clearSelection() {
-		this.listView.getSelectionModel().clearSelection();
-	}
+    public ICategorizerControllerAdder<T> getCategorizerControllerAdder() {
+        return categorizerControllerAdder;
+    }
 
-	public Stage getStage() {
-		return (Stage) this.getScene().getWindow();
-	}
+    public void setCategorizerControllerAdder(ICategorizerControllerAdder<T> categorizerControllerAdder) {
+        this.categorizerControllerAdder = categorizerControllerAdder;
+    }
 
-	public Runnable getBeforeAddCallback() {
-		return beforeAddCallback;
-	}
+    public T getSelectedItem() {
+        return this.listView.getSelectionModel().getSelectedItem();
+    }
 
-	public void setBeforeAddCallback(Runnable beforeAddCallback) {
-		this.beforeAddCallback = beforeAddCallback;
-	}
+    public void clearSelection() {
+        this.listView.getSelectionModel().clearSelection();
+    }
 
-	public Runnable getBeforeDeleteCallback() {
-		return beforeDeleteCallback;
-	}
+    public Stage getStage() {
+        return (Stage) this.getScene().getWindow();
+    }
 
-	public void setBeforeDeleteCallback(Runnable beforeDeleteCallback) {
-		this.beforeDeleteCallback = beforeDeleteCallback;
-	}
+    public Runnable getBeforeAddCallback() {
+        return beforeAddCallback;
+    }
+
+    public void setBeforeAddCallback(Runnable beforeAddCallback) {
+        this.beforeAddCallback = beforeAddCallback;
+    }
+
+    public Runnable getBeforeDeleteCallback() {
+        return beforeDeleteCallback;
+    }
+
+    public void setBeforeDeleteCallback(Runnable beforeDeleteCallback) {
+        this.beforeDeleteCallback = beforeDeleteCallback;
+    }
+
+    public ICategorizerUpdater<T> getCategorizerUpdater() {
+        return categorizerUpdater;
+    }
+
+    public void setCategorizerUpdater(ICategorizerUpdater<T> categorizerUpdater) {
+        this.categorizerUpdater = categorizerUpdater;
+
+        this.listView.setEditable(this.categorizerUpdater != null);
+    }
+
+    public Runnable getOnCustomAdd() {
+        return this.onCustomAdd;
+    }
+
+    public void setOnCustomAdd(Runnable onCustomAdd) {
+        this.onCustomAdd = onCustomAdd;
+    }
 }
